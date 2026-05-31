@@ -7,8 +7,11 @@ function ResumeUpload() {
 
   const [file, setFile] = useState(null);
 
-  const [skills, setSkills] =
-    useState([]);
+  const [analysis, setAnalysis] =
+    useState("");
+
+  const [loading, setLoading] =
+    useState(false);
 
   const handleUpload = async () => {
 
@@ -21,35 +24,43 @@ function ResumeUpload() {
         return;
       }
 
-      const formData = new FormData();
+      setLoading(true);
 
-      formData.append("file", file);
+      const formData =
+        new FormData();
 
-      const response = await axios.post(
-        "http://localhost:8080/api/resume/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type":
-              "multipart/form-data"
+      formData.append(
+        "file",
+        file
+      );
+
+      const response =
+        await axios.post(
+          "http://localhost:8080/api/resume/upload",
+          formData,
+          {
+            headers: {
+              "Content-Type":
+                "multipart/form-data"
+            }
           }
-        }
+        );
+
+      setAnalysis(
+        response.data
       );
-
-      setSkills(response.data);
-
-      localStorage.setItem(
-        "resumeSkills",
-        JSON.stringify(response.data)
-      );
-
-      alert("Resume Analyzed Successfully");
 
     } catch(error) {
 
       console.log(error);
 
-      alert("Upload Failed");
+      alert(
+        "Resume Analysis Failed"
+      );
+
+    } finally {
+
+      setLoading(false);
     }
   };
 
@@ -63,7 +74,7 @@ function ResumeUpload() {
 
         <div className="row justify-content-center">
 
-          <div className="col-lg-6">
+          <div className="col-lg-8">
 
             <div
               className="card shadow-lg border-0 p-5"
@@ -80,7 +91,9 @@ function ResumeUpload() {
                 type="file"
                 className="form-control mb-4"
                 onChange={(e) =>
-                  setFile(e.target.files[0])
+                  setFile(
+                    e.target.files[0]
+                  )
                 }
               />
 
@@ -92,28 +105,35 @@ function ResumeUpload() {
               </button>
 
               {
-                skills.length > 0 && (
+                loading && (
+
+                  <div className="text-center mt-4">
+
+                    <h5>
+                      AI is analyzing your resume...
+                    </h5>
+
+                  </div>
+                )
+              }
+
+              {
+                analysis && (
 
                   <div className="mt-5">
 
-                    <h4 className="mb-3">
-                      Detected Skills
-                    </h4>
+                    <h3>
+                      Resume Analysis
+                    </h3>
 
-                    <div className="d-flex flex-wrap gap-2">
-
-                      {
-                        skills.map((skill, index) => (
-
-                          <span
-                            key={index}
-                            className="badge bg-success p-3"
-                          >
-                            {skill}
-                          </span>
-                        ))
-                      }
-
+                    <div
+                      className="border rounded p-4 bg-light"
+                      style={{
+                        whiteSpace:
+                          "pre-wrap"
+                      }}
+                    >
+                      {analysis}
                     </div>
 
                   </div>
