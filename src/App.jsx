@@ -10,7 +10,7 @@ import Profile from "./pages/Profile";
 import ResumeUpload from "./pages/ResumeUpload";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminApplications from "./pages/AdminApplications";
-import Chatbot from "./pages/Chatbot";
+import Chatbot from "./pages/chatbot.jsx";
 function App() {
 
   return (
@@ -99,14 +99,6 @@ function App() {
           }
         />
 
-<Route
-  path="/profile"
-  element={
-    <ProtectedRoute>
-      <Profile />
-    </ProtectedRoute>
-  }
-/>
         {/*resumeupload*/}
         <Route
   path="/resume-upload"
