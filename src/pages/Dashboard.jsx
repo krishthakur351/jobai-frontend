@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
+import "./Dashboard.css";
 
 function Dashboard() {
 
@@ -37,6 +38,43 @@ function Dashboard() {
     resumeSkills = [];
   }
 
+
+  const calculateMatch = (jobSkills) => {
+
+  if (
+    !resumeSkills ||
+    resumeSkills.length === 0
+  ) {
+    return 0;
+  }
+
+  const skillsArray =
+    jobSkills
+      .toLowerCase()
+      .split(",");
+
+  let matched = 0;
+
+  resumeSkills.forEach((skill) => {
+
+    if (
+      skillsArray.some(
+        (js) =>
+          js.trim()
+            .includes(
+              skill.toLowerCase()
+            )
+      )
+    ) {
+      matched++;
+    }
+  });
+
+  return Math.round(
+    (matched /
+      resumeSkills.length) * 100
+  );
+};
   useEffect(() => {
 
     fetchJobs();
@@ -99,346 +137,327 @@ function Dashboard() {
     }
   };
 
+  // Filter jobs by search + AI skills
+  const filteredJobs = jobs.filter((job) => {
+
+    const searchText =
+      search.toLowerCase();
+
+    // SEARCH FILTER
+    const matchesSearch = (
+
+      job.title?.toLowerCase()
+        .includes(searchText) ||
+
+      job.company?.toLowerCase()
+        .includes(searchText) ||
+
+      job.skills?.toLowerCase()
+        .includes(searchText)
+    );
+
+    // AI FILTER
+    if(
+      Array.isArray(resumeSkills)
+      && resumeSkills.length > 0
+    ) {
+
+      const jobSkills =
+        job.skills?.toLowerCase() || "";
+
+      const matched =
+        resumeSkills.some((skill) =>
+          jobSkills.includes(
+            skill.toLowerCase()
+          )
+        );
+
+      return matchesSearch && matched;
+    }
+
+    return matchesSearch;
+  });
+
   return (
 
-    <div>
+    <div className="Dashboard-page">
 
       <Navbar />
 
-      <div
-        className="container-fluid py-5"
-        style={{
-          minHeight: "100vh",
-          background:
-            "linear-gradient(to right, #141e30, #243b55)"
-        }}
-      >
+      {/* ── HERO SECTION ──────────────────────────── */}
 
-        {/* HERO SECTION */}
+      <section className="Dashboard-hero">
 
-        <div
-          className="text-center mb-5 text-white"
-        >
+        <h1 className="Dashboard-hero-title">
+          Welcome To JobAI{" "}
+          <span className="Dashboard-emoji">🚀</span>
+        </h1>
 
-          <h1
-            className="fw-bold display-4"
-          >
-            Welcome To JobAI 🚀
-          </h1>
+        <p className="Dashboard-hero-subtitle">
+          AI Powered Smart Recruitment Platform
+        </p>
 
-          <p className="lead">
-            AI Powered Smart Recruitment Platform
-          </p>
+        {
+          Array.isArray(resumeSkills)
+          && resumeSkills.length > 0 && (
 
-          {
-            Array.isArray(resumeSkills)
-            && resumeSkills.length > 0 && (
-
-              <div className="mt-3">
-
-                <h5 className="text-success">
-                  AI Recommended Jobs
-                  Based On Your Resume 🚀
-                </h5>
-
-              </div>
-            )
-          }
-
-          {/* STATS */}
-
-          <div className="row mt-5">
-
-            <div className="col-md-4 mb-3">
-
-              <div
-                className="card border-0 shadow-lg p-4"
-                style={{
-                  borderRadius: "20px",
-                  background:
-                    "rgba(255,255,255,0.15)",
-                  backdropFilter:
-                    "blur(10px)"
-                }}
-              >
-
-                <h2 className="text-white">
-                  {jobs.length}
-                </h2>
-
-                <p className="text-light">
-                  Available Jobs
-                </p>
-
-              </div>
-
+            <div className="Dashboard-ai-badge">
+              <span>🤖</span>
+              AI Recommended Jobs Based On Your Resume
             </div>
+          )
+        }
 
-            <div className="col-md-4 mb-3">
+        {/* ── STATS ──────────────────────────────── */}
 
-              <div
-                className="card border-0 shadow-lg p-4"
-                style={{
-                  borderRadius: "20px",
-                  background:
-                    "rgba(255,255,255,0.15)",
-                  backdropFilter:
-                    "blur(10px)"
-                }}
-              >
+        <div className="Dashboard-stats">
 
-                <h2 className="text-white">
-                  {resumeSkills.length}
-                </h2>
+          <div className="Dashboard-stat-card">
+            <h2 className="Dashboard-stat-value">
+              {jobs.length}
+            </h2>
+            <p className="Dashboard-stat-label">
+              Available Jobs
+            </p>
+          </div>
 
-                <p className="text-light">
-                  AI Skills Detected
-                </p>
+          <div className="Dashboard-stat-card">
+            <h2 className="Dashboard-stat-value">
+              {resumeSkills.length}
+            </h2>
+            <p className="Dashboard-stat-label">
+              AI Skills Detected
+            </p>
+          </div>
 
-              </div>
-
-            </div>
-
-            <div className="col-md-4 mb-3">
-
-              <div
-                className="card border-0 shadow-lg p-4"
-                style={{
-                  borderRadius: "20px",
-                  background:
-                    "rgba(255,255,255,0.15)",
-                  backdropFilter:
-                    "blur(10px)"
-                }}
-              >
-
-                <h2 className="text-white">
-                  AI
-                </h2>
-
-                <p className="text-light">
-                  Smart Recommendations
-                </p>
-
-              </div>
-
-            </div>
-
+          <div className="Dashboard-stat-card">
+            <h2 className="Dashboard-stat-value">
+              AI
+            </h2>
+            <p className="Dashboard-stat-label">
+              Smart Recommendations
+            </p>
           </div>
 
         </div>
 
-        {/* SEARCH BAR */}
+      </section>
 
-        <div className="row justify-content-center mb-5">
+      {/* ── SEARCH BAR ────────────────────────────── */}
 
-          <div className="col-lg-6 col-md-8 col-12">
+      <div className="Dashboard-search-section">
+        <div className="Dashboard-search-wrapper">
 
-            <input
-              type="text"
-              placeholder="Search by title, company or skills..."
-              className="form-control form-control-lg shadow-sm"
-              onChange={(e) =>
-                setSearch(e.target.value)
-              }
-              style={{
-                borderRadius: "15px"
-              }}
-            />
+          <span className="Dashboard-search-icon">
+            🔍
+          </span>
 
-          </div>
+          <input
+            type="text"
+            placeholder="Search by title, company or skills..."
+            className="Dashboard-search-input"
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+          />
 
         </div>
+      </div>
 
-        {/* JOB CARDS */}
+      {/* ── JOB CARDS ─────────────────────────────── */}
 
-        <div className="row g-4">
+      <div className="Dashboard-content">
+
+        <div className="Dashboard-jobs-grid">
 
           {
-            jobs
+            filteredJobs.length === 0 ? (
 
-              .filter((job) => {
+              <div className="Dashboard-empty">
+                <div className="Dashboard-empty-icon">
+                  📭
+                </div>
+                <h3 className="Dashboard-empty-title">
+                  No jobs found
+                </h3>
+                <p className="Dashboard-empty-text">
+                  Try adjusting your search or check back later.
+                </p>
+              </div>
 
-                const searchText =
-                  search.toLowerCase();
+            ) : (
 
-                // SEARCH FILTER
-                const matchesSearch = (
-
-                  job.title?.toLowerCase()
-                    .includes(searchText) ||
-
-                  job.company?.toLowerCase()
-                    .includes(searchText) ||
-
-                  job.skills?.toLowerCase()
-                    .includes(searchText)
-                );
-
-                // AI FILTER
-                if(
-                  Array.isArray(resumeSkills)
-                  && resumeSkills.length > 0
-                ) {
-
-                  const jobSkills =
-                    job.skills?.toLowerCase() || "";
-
-                  const matched =
-                    resumeSkills.some((skill) =>
-                      jobSkills.includes(
-                        skill.toLowerCase()
-                      )
-                    );
-
-                  return matchesSearch && matched;
-                }
-
-                return matchesSearch;
-              })
-
-              .map((job) => (
+              filteredJobs.map((job, index) => (
 
                 <div
-                  className="col-xl-4 col-lg-6 col-md-6 col-12"
+                  className="Dashboard-job-card"
                   key={job.id}
+                  style={{
+                    animationDelay: `${index * 0.06}s`
+                  }}
                 >
 
-                  <div
-                    className="card border-0 shadow-lg h-100"
-                    style={{
-                      borderRadius: "20px",
-                      transition: "0.3s"
-                    }}
-                  >
+                  <div className="Dashboard-card-body">
 
-                    <div className="card-body p-4 d-flex flex-column">
+                    {/* Badge */}
+                    <span className="Dashboard-badge-hiring">
+                      <span>●</span> Hiring
+                    </span>
 
-                      <div className="mb-3">
+                    {/* Title + Company */}
+                    <h3 className="Dashboard-job-title">
+                      {job.title}
+                    </h3>
 
-                        <span className="badge bg-primary mb-3">
-                          Hiring
-                        </span>
+                    <p className="Dashboard-job-company">
+                      {job.company}
+                    </p>
 
-                        <h3 className="fw-bold">
-                          {job.title}
-                        </h3>
+                    {/* Meta: Location & Salary */}
+                    <div className="Dashboard-job-meta">
 
-                        <h6 className="text-muted">
-                          {job.company}
-                        </h6>
+                      <span className="Dashboard-meta-item">
+                        <span className="Dashboard-meta-icon">📍</span>
+                        {job.location}
+                      </span>
 
-                      </div>
+                      <span className="Dashboard-meta-item">
+                        <span className="Dashboard-meta-icon">💰</span>
+                        ₹{job.salary}
+                      </span>
 
-                      <div className="mb-3">
+                    </div>
 
-                        <p>
-                          📍 {job.location}
-                        </p>
+                    {/* Description */}
+                    <p className="Dashboard-job-desc">
+                      {job.description}
+                    </p>
 
-                        <p>
-                          💰 ₹{job.salary}
-                        </p>
+                    {/* Skills */}
+                    <div className="Dashboard-skills-section">
 
-                      </div>
+                      <p className="Dashboard-skills-label">
+                        Skills Required
+                      </p>
 
-                      <div className="mb-3">
-
-                        <p className="text-muted">
-                          {job.description}
-                        </p>
-
-                      </div>
-
-                      <div className="mb-4">
-
-                        <strong>
-                          Skills:
-                        </strong>
-
-                        <p>
-                          {job.skills}
-                        </p>
-
-                      </div>
-
-                      {/* BUTTONS */}
-
-                      <div className="mt-auto">
-
+                      <div className="Dashboard-skills-list">
                         {
-                          role === "ADMIN" ? (
+                          job.skills?.split(",").map((skill, i) => (
+                            <span
+                              className="Dashboard-skill-tag"
+                              key={i}
+                            >
+                              {skill.trim()}
+                            </span>
+                          ))
+                        }
+                      </div>
 
-                            <div className="d-flex flex-column flex-sm-row gap-2">
+                      {/* AI Match Badge */}
+                      {
+                        resumeSkills.length > 0 && (
 
-                              <button
-                                className="btn btn-warning w-100"
-                                onClick={() =>
-                                  navigate(`/edit-job/${job.id}`)
-                                }
-                              >
-                                Edit
-                              </button>
+                          <div>
 
-                              <button
-                                className="btn btn-danger w-100"
-                                onClick={() =>
-                                  handleDelete(job.id)
-                                }
-                              >
-                                Delete
-                              </button>
+                            {
+                              calculateMatch(
+                                job.skills
+                              ) >= 70 ? (
 
-                            </div>
+                                <span className="Dashboard-match-badge Dashboard-match-high">
+                                  🔥 {calculateMatch(job.skills)}% Match
+                                </span>
 
-                          ) : (
+                              ) : (
+
+                                <span className="Dashboard-match-badge Dashboard-match-low">
+                                  {calculateMatch(job.skills)}% Match
+                                </span>
+
+                              )
+                            }
+
+                          </div>
+                        )
+                      }
+
+                    </div>
+
+                    {/* BUTTONS */}
+
+                    <div className="Dashboard-card-actions">
+
+                      {
+                        role === "ADMIN" ? (
+
+                          <div className="Dashboard-admin-actions">
 
                             <button
-                              className="btn btn-success w-100"
-                              onClick={async () => {
-
-                                try {
-
-                                  const token =
-                                    localStorage.getItem("token");
-
-                                  const email =
-                                    localStorage.getItem("email");
-
-                                  await axios.post(
-                                    "http://localhost:8080/api/applications",
-                                    {
-                                      userEmail: email,
-                                      jobTitle: job.title,
-                                      company: job.company
-                                    },
-                                    {
-                                      headers: {
-                                        Authorization:
-                                          `Bearer ${token}`
-                                      }
-                                    }
-                                  );
-
-                                  alert(
-                                    "Application Submitted Successfully 🚀"
-                                  );
-
-                                } catch(error) {
-
-                                  console.log(error);
-
-                                  alert("Application Failed");
-                                }
-                              }}
+                              className="Dashboard-btn Dashboard-btn-edit"
+                              onClick={() =>
+                                navigate(`/edit-job/${job.id}`)
+                              }
                             >
-                              Apply Now
+                              ✏️ Edit
                             </button>
 
-                          )
-                        }
+                            <button
+                              className="Dashboard-btn Dashboard-btn-delete"
+                              onClick={() =>
+                                handleDelete(job.id)
+                              }
+                            >
+                              🗑️ Delete
+                            </button>
 
-                      </div>
+                          </div>
+
+                        ) : (
+
+                          <button
+                            className="Dashboard-btn Dashboard-btn-apply"
+                            onClick={async () => {
+
+                              try {
+
+                                const token =
+                                  localStorage.getItem("token");
+
+                                const email =
+                                  localStorage.getItem("email");
+
+                                await axios.post(
+                                  "http://localhost:8080/api/applications",
+                                  {
+                                    userEmail: email,
+                                    jobTitle: job.title,
+                                    company: job.company
+                                  },
+                                  {
+                                    headers: {
+                                      Authorization:
+                                        `Bearer ${token}`
+                                    }
+                                  }
+                                );
+
+                                alert(
+                                  "Application Submitted Successfully 🚀"
+                                );
+
+                              } catch(error) {
+
+                                console.log(error);
+
+                                alert("Application Failed");
+                              }
+                            }}
+                          >
+                            Apply Now →
+                          </button>
+
+                        )
+                      }
 
                     </div>
 
@@ -446,6 +465,7 @@ function Dashboard() {
 
                 </div>
               ))
+            )
           }
 
         </div>

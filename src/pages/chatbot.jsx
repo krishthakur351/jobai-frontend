@@ -19,20 +19,20 @@ function ChatBot() {
 
       setLoading(true);
 
+      const email =
+        localStorage.getItem("email");
+
       const response = await axios.post(
         "http://localhost:8080/api/ai/chat",
-        question,
         {
-          headers: {
-            "Content-Type":
-              "text/plain"
-          }
+          email: email,
+          question: question
         }
       );
 
       setAnswer(response.data);
 
-    } catch(error) {
+    } catch (error) {
 
       console.log(error);
 

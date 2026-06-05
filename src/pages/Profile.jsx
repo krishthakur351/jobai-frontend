@@ -8,35 +8,17 @@ function Profile() {
   const [applications, setApplications] =
     useState([]);
 
+  const [skills, setSkills] =
+    useState([]);
+
   const email =
     localStorage.getItem("email");
-
-  // SAFE SKILLS FETCH
-  const storedSkills =
-    localStorage.getItem("resumeSkills");
-
-  let skills = [];
-
-  try {
-
-    const parsedSkills =
-      storedSkills
-        ? JSON.parse(storedSkills)
-        : [];
-
-    skills =
-      Array.isArray(parsedSkills)
-        ? parsedSkills
-        : [];
-
-  } catch(error) {
-
-    skills = [];
-  }
 
   useEffect(() => {
 
     fetchApplications();
+
+    fetchSkills();
 
   }, []);
 
@@ -59,7 +41,32 @@ function Profile() {
 
       setApplications(response.data);
 
-    } catch(error) {
+    } catch (error) {
+
+      console.log(error);
+    }
+  };
+
+  const fetchSkills = async () => {
+
+    try {
+
+      const token =
+        localStorage.getItem("token");
+
+      const response = await axios.get(
+        `http://localhost:8080/api/resume/skills/${email}`,
+        {
+          headers: {
+            Authorization:
+              `Bearer ${token}`
+          }
+        }
+      );
+
+      setSkills(response.data);
+
+    } catch (error) {
 
       console.log(error);
     }
@@ -92,8 +99,6 @@ function Profile() {
 
               <div className="card-body p-5">
 
-                {/* PROFILE */}
-
                 <div className="text-center">
 
                   <img
@@ -114,8 +119,6 @@ function Profile() {
                 </div>
 
                 <hr className="my-4" />
-
-                {/* STATS */}
 
                 <div className="row text-center">
 
@@ -169,8 +172,6 @@ function Profile() {
 
                 </div>
 
-                {/* SKILLS */}
-
                 <div className="mt-5">
 
                   <h4 className="fw-bold mb-3">
@@ -180,7 +181,6 @@ function Profile() {
                   <div className="d-flex flex-wrap gap-2">
 
                     {
-                      Array.isArray(skills) &&
                       skills.length > 0 ? (
 
                         skills.map((skill, index) => (

@@ -1,0 +1,617 @@
+/* ============================================================
+   JobAI — Premium Navbar Stylesheet
+   Glassmorphism  •  Micro-animations  •  Dark/Light Themes
+   ============================================================ */
+
+/* ─── Design Tokens ─────────────────────────────────────── */
+:root {
+  /* Brand Palette */
+  --nav-brand-from: #a78bfa;
+  --nav-brand-to: #6366f1;
+  --nav-accent: #8b5cf6;
+  --nav-accent-glow: rgba(139, 92, 246, 0.35);
+
+  /* Light Theme */
+  --nav-bg-light: rgba(255, 255, 255, 0.72);
+  --nav-border-light: rgba(0, 0, 0, 0.06);
+  --nav-text-light: #334155;
+  --nav-text-muted-light: #64748b;
+  --nav-hover-bg-light: rgba(139, 92, 246, 0.06);
+  --nav-active-bg-light: rgba(139, 92, 246, 0.1);
+  --nav-drawer-bg-light: rgba(255, 255, 255, 0.97);
+
+  /* Dark Theme */
+  --nav-bg-dark: rgba(15, 15, 20, 0.72);
+  --nav-border-dark: rgba(255, 255, 255, 0.06);
+  --nav-text-dark: #e2e8f0;
+  --nav-text-muted-dark: #94a3b8;
+  --nav-hover-bg-dark: rgba(139, 92, 246, 0.1);
+  --nav-active-bg-dark: rgba(139, 92, 246, 0.15);
+  --nav-drawer-bg-dark: rgba(10, 10, 15, 0.97);
+
+  /* Buttons */
+  --btn-warning-from: #fbbf24;
+  --btn-warning-to: #f59e0b;
+  --btn-info-from: #22d3ee;
+  --btn-info-to: #06b6d4;
+  --btn-danger-from: #fb7185;
+  --btn-danger-to: #ef4444;
+
+  /* Timing */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 0.2s;
+  --duration-normal: 0.3s;
+  --duration-slow: 0.45s;
+}
+
+/* ─── Navbar Wrapper (Sticky + Glassmorphism) ──────────── */
+.Navbar-wrapper {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  transition:
+    background-color var(--duration-slow) var(--ease-spring),
+    border-color var(--duration-slow) var(--ease-spring),
+    box-shadow var(--duration-slow) var(--ease-spring),
+    height var(--duration-normal) var(--ease-smooth);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Scrolled State (compact + elevated) ─────────────── */
+.Navbar-wrapper.Navbar-scrolled {
+  height: 60px;
+}
+
+.Navbar-wrapper.Navbar-scrolled.Navbar-light-mode {
+  box-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.06),
+    0 6px 28px rgba(0, 0, 0, 0.05);
+  background-color: rgba(255, 255, 255, 0.88);
+}
+
+.Navbar-wrapper.Navbar-scrolled.Navbar-dark-mode {
+  box-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.3),
+    0 6px 28px rgba(0, 0, 0, 0.25);
+  background-color: rgba(15, 15, 20, 0.88);
+}
+
+/* ─── Light Mode ──────────────────────────────────────── */
+.Navbar-light-mode {
+  background-color: var(--nav-bg-light);
+  border-bottom: 1px solid var(--nav-border-light);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 4px 24px rgba(0, 0, 0, 0.02);
+  color: var(--nav-text-light);
+}
+
+/* ─── Dark Mode ───────────────────────────────────────── */
+.Navbar-dark-mode {
+  background-color: var(--nav-bg-dark);
+  border-bottom: 1px solid var(--nav-border-dark);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    0 4px 24px rgba(0, 0, 0, 0.15);
+  color: var(--nav-text-dark);
+}
+
+/* ─── Inner Container ─────────────────────────────────── */
+.Navbar-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  gap: 8px;
+}
+
+/* ─── Brand / Logo ────────────────────────────────────── */
+.Navbar-brand {
+  font-size: 1.45rem;
+  font-weight: 800;
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--nav-brand-from) 0%, var(--nav-brand-to) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: -0.03em;
+  transition:
+    transform var(--duration-fast) var(--ease-spring),
+    filter var(--duration-fast) var(--ease-spring);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.Navbar-brand:hover {
+  transform: scale(1.04);
+  filter: brightness(1.12) drop-shadow(0 2px 12px var(--nav-accent-glow));
+}
+
+.Navbar-brand:active {
+  transform: scale(0.98);
+}
+
+/* ─── Navigation Menu (Desktop) ───────────────────────── */
+.Navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ─── Navigation Link ─────────────────────────────────── */
+.Navbar-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  position: relative;
+  white-space: nowrap;
+  transition:
+    color var(--duration-fast) var(--ease-smooth),
+    background-color var(--duration-fast) var(--ease-smooth),
+    transform var(--duration-fast) var(--ease-spring);
+}
+
+/* Animated underline indicator */
+.Navbar-link::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 20px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--nav-brand-from), var(--nav-brand-to));
+  transition: transform var(--duration-normal) var(--ease-spring);
+}
+
+/* Light theme link colors */
+.Navbar-light-mode .Navbar-link {
+  color: var(--nav-text-muted-light);
+}
+
+.Navbar-dark-mode .Navbar-link {
+  color: var(--nav-text-muted-dark);
+}
+
+/* Hover state */
+.Navbar-link:hover {
+  color: var(--nav-accent);
+  transform: translateY(-1px);
+}
+
+.Navbar-light-mode .Navbar-link:hover {
+  background-color: var(--nav-hover-bg-light);
+}
+
+.Navbar-dark-mode .Navbar-link:hover {
+  background-color: var(--nav-hover-bg-dark);
+}
+
+.Navbar-link:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* ─── Active Link State ───────────────────────────────── */
+.Navbar-link-active {
+  font-weight: 600;
+}
+
+.Navbar-light-mode .Navbar-link-active {
+  color: #7c3aed;
+  background-color: var(--nav-active-bg-light);
+}
+
+.Navbar-dark-mode .Navbar-link-active {
+  color: #c4b5fd;
+  background-color: var(--nav-active-bg-dark);
+}
+
+.Navbar-link-active::after {
+  transform: translateX(-50%) scaleX(1) !important;
+  background: linear-gradient(90deg, var(--nav-brand-from), var(--nav-brand-to));
+}
+
+/* ─── Actions Panel (Desktop) ─────────────────────────── */
+.Navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ─── Button Base ─────────────────────────────────────── */
+.Navbar-btn {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.825rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  transition:
+    transform var(--duration-fast) var(--ease-spring),
+    box-shadow var(--duration-fast) var(--ease-spring),
+    filter var(--duration-fast) ease;
+}
+
+.Navbar-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.Navbar-btn:active {
+  transform: translateY(0.5px) scale(0.98);
+}
+
+/* ─── Gradient Button Variants ────────────────────────── */
+.Navbar-btn-warning {
+  background: linear-gradient(135deg, var(--btn-warning-from) 0%, var(--btn-warning-to) 100%);
+  color: #1c1917;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+}
+
+.Navbar-btn-warning:hover {
+  box-shadow:
+    0 4px 16px rgba(245, 158, 11, 0.3),
+    0 0 0 1px rgba(245, 158, 11, 0.1);
+}
+
+.Navbar-btn-info {
+  background: linear-gradient(135deg, var(--btn-info-from) 0%, var(--btn-info-to) 100%);
+  color: #0c4a6e;
+  box-shadow: 0 2px 8px rgba(6, 182, 212, 0.2);
+}
+
+.Navbar-btn-info:hover {
+  box-shadow:
+    0 4px 16px rgba(6, 182, 212, 0.3),
+    0 0 0 1px rgba(6, 182, 212, 0.1);
+}
+
+.Navbar-btn-danger {
+  background: linear-gradient(135deg, var(--btn-danger-from) 0%, var(--btn-danger-to) 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+}
+
+.Navbar-btn-danger:hover {
+  box-shadow:
+    0 4px 16px rgba(239, 68, 68, 0.35),
+    0 0 0 1px rgba(239, 68, 68, 0.1);
+}
+
+/* ─── Dark / Light Toggle Button ──────────────────────── */
+.Navbar-btn-toggle {
+  background-color: transparent;
+  color: currentColor;
+  border: 1.5px solid;
+  font-size: 1.05rem;
+  padding: 7px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    border-color var(--duration-fast) ease,
+    background-color var(--duration-fast) ease,
+    transform var(--duration-normal) var(--ease-spring);
+}
+
+.Navbar-btn-toggle:hover {
+  transform: rotate(20deg) scale(1.1);
+}
+
+.Navbar-btn-toggle:active {
+  transform: rotate(-10deg) scale(0.95);
+}
+
+/* Light theme toggle */
+.Navbar-light-mode .Navbar-btn-toggle {
+  border-color: rgba(0, 0, 0, 0.12);
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.Navbar-light-mode .Navbar-btn-toggle:hover {
+  border-color: rgba(139, 92, 246, 0.3);
+  background-color: rgba(139, 92, 246, 0.06);
+}
+
+/* Dark theme toggle */
+.Navbar-dark-mode .Navbar-btn-toggle {
+  border-color: rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.Navbar-dark-mode .Navbar-btn-toggle:hover {
+  border-color: rgba(196, 181, 253, 0.3);
+  background-color: rgba(196, 181, 253, 0.08);
+}
+
+/* ─── Hamburger Menu Toggle (Mobile) ──────────────────── */
+.Navbar-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1010;
+  color: currentColor;
+  border-radius: 10px;
+  gap: 5px;
+  transition: background-color var(--duration-fast) ease;
+}
+
+.Navbar-light-mode .Navbar-hamburger:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.Navbar-dark-mode .Navbar-hamburger:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.Navbar-hamburger-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 2px;
+  transition:
+    transform var(--duration-normal) var(--ease-spring),
+    opacity var(--duration-normal) var(--ease-spring),
+    width var(--duration-normal) var(--ease-spring);
+  transform-origin: center center;
+}
+
+/* Hamburger → X morph animation */
+.Navbar-hamburger.Navbar-open .Navbar-hamburger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+  width: 22px;
+}
+
+.Navbar-hamburger.Navbar-open .Navbar-hamburger-bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.Navbar-hamburger.Navbar-open .Navbar-hamburger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+  width: 22px;
+}
+
+/* ─── Mobile Drawer ───────────────────────────────────── */
+.Navbar-drawer {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  width: 100%;
+  height: calc(100dvh - 72px);
+  z-index: 999;
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px 32px;
+  gap: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  /* Slide-in animation */
+  transform: translateY(-12px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform var(--duration-slow) var(--ease-spring),
+    opacity var(--duration-normal) var(--ease-smooth),
+    visibility 0s linear var(--duration-slow);
+}
+
+.Navbar-drawer.Navbar-open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform var(--duration-slow) var(--ease-spring),
+    opacity var(--duration-normal) var(--ease-smooth),
+    visibility 0s linear 0s;
+}
+
+/* Drawer theme backgrounds */
+.Navbar-light-mode.Navbar-drawer {
+  background-color: var(--nav-drawer-bg-light);
+  border-bottom: 1px solid var(--nav-border-light);
+}
+
+.Navbar-dark-mode.Navbar-drawer {
+  background-color: var(--nav-drawer-bg-dark);
+  border-bottom: 1px solid var(--nav-border-dark);
+}
+
+/* ─── Drawer Links ────────────────────────────────────── */
+.Navbar-drawer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.Navbar-drawer-links .Navbar-link {
+  font-size: 1rem;
+  padding: 14px 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+}
+
+/* Staggered entrance animation for drawer links */
+.Navbar-drawer.Navbar-open .Navbar-drawer-links .Navbar-link:nth-child(1) {
+  animation: drawerSlideIn var(--duration-slow) var(--ease-spring) 0.04s both;
+}
+
+.Navbar-drawer.Navbar-open .Navbar-drawer-links .Navbar-link:nth-child(2) {
+  animation: drawerSlideIn var(--duration-slow) var(--ease-spring) 0.08s both;
+}
+
+.Navbar-drawer.Navbar-open .Navbar-drawer-links .Navbar-link:nth-child(3) {
+  animation: drawerSlideIn var(--duration-slow) var(--ease-spring) 0.12s both;
+}
+
+.Navbar-drawer.Navbar-open .Navbar-drawer-links .Navbar-link:nth-child(4) {
+  animation: drawerSlideIn var(--duration-slow) var(--ease-spring) 0.16s both;
+}
+
+.Navbar-drawer.Navbar-open .Navbar-drawer-links .Navbar-link:nth-child(5) {
+  animation: drawerSlideIn var(--duration-slow) var(--ease-spring) 0.20s both;
+}
+
+@keyframes drawerSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ─── Drawer Actions ──────────────────────────────────── */
+.Navbar-drawer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+  padding-top: 20px;
+  border-top: 1px solid;
+}
+
+.Navbar-light-mode .Navbar-drawer-actions {
+  border-top-color: rgba(0, 0, 0, 0.06);
+}
+
+.Navbar-dark-mode .Navbar-drawer-actions {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Drawer buttons should be full-width and slightly larger */
+.Navbar-drawer-actions .Navbar-btn {
+  width: 100%;
+  padding: 12px 18px;
+  font-size: 0.9rem;
+  border-radius: 12px;
+}
+
+.Navbar-drawer-actions .Navbar-btn-toggle {
+  width: 100%;
+  padding: 12px 18px;
+  font-size: 0.9rem;
+  border-radius: 12px;
+}
+
+/* ─── Responsive: Tablet & Mobile ─────────────────────── */
+@media (max-width: 1024px) {
+  .Navbar-wrapper {
+    height: 64px;
+  }
+
+  .Navbar-container {
+    padding: 0 20px;
+  }
+
+  .Navbar-menu {
+    display: none;
+  }
+
+  .Navbar-actions {
+    display: none;
+  }
+
+  .Navbar-hamburger {
+    display: flex;
+  }
+
+  .Navbar-drawer {
+    top: 64px;
+    height: calc(100dvh - 64px);
+    padding: 20px 20px 28px;
+  }
+
+  .Navbar-brand {
+    font-size: 1.3rem;
+  }
+}
+
+/* ─── Small Mobile Adjustments ────────────────────────── */
+@media (max-width: 480px) {
+  .Navbar-container {
+    padding: 0 16px;
+  }
+
+  .Navbar-drawer {
+    padding: 16px 16px 24px;
+  }
+
+  .Navbar-drawer-links .Navbar-link {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+}
+
+/* ─── Focus-Visible Accessibility ─────────────────────── */
+.Navbar-link:focus-visible,
+.Navbar-btn:focus-visible,
+.Navbar-btn-toggle:focus-visible,
+.Navbar-hamburger:focus-visible {
+  outline: 2px solid var(--nav-accent);
+  outline-offset: 2px;
+}
+
+/* ─── Reduced Motion Preference ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .Navbar-wrapper,
+  .Navbar-brand,
+  .Navbar-link,
+  .Navbar-link::after,
+  .Navbar-btn,
+  .Navbar-btn-toggle,
+  .Navbar-hamburger-bar,
+  .Navbar-drawer {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

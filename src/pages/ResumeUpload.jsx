@@ -17,7 +17,7 @@ function ResumeUpload() {
 
     try {
 
-      if(!file) {
+      if (!file) {
 
         alert("Please Select Resume");
 
@@ -26,12 +26,20 @@ function ResumeUpload() {
 
       setLoading(true);
 
+      const email =
+        localStorage.getItem("email");
+
       const formData =
         new FormData();
 
       formData.append(
         "file",
         file
+      );
+
+      formData.append(
+        "email",
+        email
       );
 
       const response =
@@ -46,11 +54,20 @@ function ResumeUpload() {
           }
         );
 
+      console.log(response.data);
+
       setAnalysis(
-        response.data
+        response.data.analysis
       );
 
-    } catch(error) {
+      localStorage.setItem(
+        "resumeSkills",
+        JSON.stringify(
+          response.data.skills || []
+        )
+      );
+
+    } catch (error) {
 
       console.log(error);
 
@@ -100,8 +117,13 @@ function ResumeUpload() {
               <button
                 className="btn btn-primary w-100"
                 onClick={handleUpload}
+                disabled={loading}
               >
-                Analyze Resume
+                {
+                  loading
+                    ? "Analyzing..."
+                    : "Analyze Resume"
+                }
               </button>
 
               {
