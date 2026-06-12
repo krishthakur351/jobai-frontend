@@ -11,6 +11,8 @@ import ResumeUpload from "./pages/ResumeUpload";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminApplications from "./pages/AdminApplications";
 import Chatbot from "./pages/chatbot.jsx";
+import AdminResumes from "./pages/AdminResumes";
+import AdminDashboard from "./pages/AdminDashboard";
 function App() {
 
   return (
@@ -41,14 +43,17 @@ function App() {
           }
         />
 
+
+        <Route path="/admin" element={<AdminDashboard />} />
+
         <Route
-  path="/chatbot"
-  element={
-    <ProtectedRoute>
-      <Chatbot />
-    </ProtectedRoute>
-  }
-/>
+          path="/chatbot"
+          element={
+            <ProtectedRoute>
+              <Chatbot />
+            </ProtectedRoute>
+          }
+        />
 
         {/* ADD JOB */}
         <Route
@@ -59,7 +64,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-
+        <Route
+          path="/admin-resumes"
+          element={
+            <ProtectedRoute>
+              <AdminResumes />
+            </ProtectedRoute>
+          }
+        />
         {/* EDIT JOB */}
         <Route
           path="/edit-job/:id"
@@ -71,13 +83,13 @@ function App() {
         />
 
         <Route
-  path="/admin-applications"
-  element={
-    <ProtectedRoute>
-      <AdminApplications />
-    </ProtectedRoute>
-  }
-/>
+          path="/admin-applications"
+          element={
+            <ProtectedRoute>
+              <AdminApplications />
+            </ProtectedRoute>
+          }
+        />
 
         {/* APPLIED JOBS */}
         <Route
@@ -101,13 +113,13 @@ function App() {
 
         {/*resumeupload*/}
         <Route
-  path="/resume-upload"
-  element={
-    <ProtectedRoute>
-      <ResumeUpload />
-    </ProtectedRoute>
-  }
-/>
+          path="/resume-upload"
+          element={
+            <ProtectedRoute>
+              <ResumeUpload />
+            </ProtectedRoute>
+          }
+        />
 
       </Routes>
 
