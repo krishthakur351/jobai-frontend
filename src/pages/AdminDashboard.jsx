@@ -12,7 +12,7 @@ function AdminDashboard() {
     const fetchResumes = async () => {
         try {
             const response = await axios.get(
-                "http://localhost:8080/api/resume/all"
+                "https://jobai-backend-swrv.onrender.com/api/resume/all"
             );
 
             setResumes(response.data);
@@ -27,7 +27,7 @@ function AdminDashboard() {
         try {
 
             await axios.put(
-                `http://localhost:8080/api/resume/status/${email}?status=${status}`
+                `https://jobai-backend-swrv.onrender.com/api/resume/status/${email}?status=${status}`
             );
 
             fetchResumes();

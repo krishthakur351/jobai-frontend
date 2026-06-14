@@ -22,7 +22,7 @@ function AdminApplications() {
         localStorage.getItem("token");
 
       const response = await axios.get(
-        "http://localhost:8080/api/applications",
+        "https://jobai-backend-swrv.onrender.com/api/applications",
         {
           headers: {
             Authorization:
@@ -52,7 +52,7 @@ function AdminApplications() {
         localStorage.getItem("token");
 
       await axios.put(
-        `http://localhost:8080/api/applications/${id}?status=${status}`,
+        `https://jobai-backend-swrv.onrender.com/api/applications/${id}?status=${status}`,
         {},
         {
           headers: {

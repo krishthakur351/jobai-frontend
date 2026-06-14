@@ -10,7 +10,7 @@ function AdminResumes() {
 
         axios
             .get(
-                "http://localhost:8080/api/resume/all"
+                "https://jobai-backend-swrv.onrender.com/api/resume/all"
             )
             .then((res) => {
 

@@ -30,7 +30,7 @@ function Profile() {
         localStorage.getItem("token");
 
       const response = await axios.get(
-        `http://localhost:8080/api/applications/${email}`,
+        `https://jobai-backend-swrv.onrender.com/api/applications/${email}`,
         {
           headers: {
             Authorization:
