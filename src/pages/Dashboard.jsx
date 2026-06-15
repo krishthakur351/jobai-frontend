@@ -33,7 +33,7 @@ function Dashboard() {
         ? parsedSkills
         : [];
 
-  } catch(error) {
+  } catch (error) {
 
     resumeSkills = [];
   }
@@ -41,40 +41,40 @@ function Dashboard() {
 
   const calculateMatch = (jobSkills) => {
 
-  if (
-    !resumeSkills ||
-    resumeSkills.length === 0
-  ) {
-    return 0;
-  }
-
-  const skillsArray =
-    jobSkills
-      .toLowerCase()
-      .split(",");
-
-  let matched = 0;
-
-  resumeSkills.forEach((skill) => {
-
     if (
-      skillsArray.some(
-        (js) =>
-          js.trim()
-            .includes(
-              skill.toLowerCase()
-            )
-      )
+      !resumeSkills ||
+      resumeSkills.length === 0
     ) {
-      matched++;
+      return 0;
     }
-  });
 
-  return Math.round(
-    (matched /
-      resumeSkills.length) * 100
-  );
-};
+    const skillsArray =
+      jobSkills
+        .toLowerCase()
+        .split(",");
+
+    let matched = 0;
+
+    resumeSkills.forEach((skill) => {
+
+      if (
+        skillsArray.some(
+          (js) =>
+            js.trim()
+              .includes(
+                skill.toLowerCase()
+              )
+        )
+      ) {
+        matched++;
+      }
+    });
+
+    return Math.round(
+      (matched /
+        resumeSkills.length) * 100
+    );
+  };
   useEffect(() => {
 
     fetchJobs();
@@ -89,18 +89,17 @@ function Dashboard() {
         localStorage.getItem("token");
 
       const response = await axios.get(
-        "http://localhost:8080/api/jobs",
-        {
-          headers: {
-            Authorization:
-              `Bearer ${token}`
-          }
+        "https://jobai-backend-swrv.onrender.com/api/jobs"        {
+        headers: {
+          Authorization:
+            `Bearer ${token}`
         }
+      }
       );
 
       setJobs(response.data);
 
-    } catch(error) {
+    } catch (error) {
 
       console.log(error);
 
@@ -114,9 +113,8 @@ function Dashboard() {
 
       const token =
         localStorage.getItem("token");
-
       await axios.delete(
-        `http://localhost:8080/api/jobs/${id}`,
+        `https://jobai-backend-swrv.onrender.com/api/jobs/${id}`,
         {
           headers: {
             Authorization:
@@ -129,7 +127,7 @@ function Dashboard() {
 
       fetchJobs();
 
-    } catch(error) {
+    } catch (error) {
 
       console.log(error);
 
@@ -157,7 +155,7 @@ function Dashboard() {
     );
 
     // AI FILTER
-    if(
+    if (
       Array.isArray(resumeSkills)
       && resumeSkills.length > 0
     ) {
@@ -427,7 +425,7 @@ function Dashboard() {
                                   localStorage.getItem("email");
 
                                 await axios.post(
-                                  "http://localhost:8080/api/applications",
+                                  "https://jobai-backend-swrv.onrender.com/api/applications",
                                   {
                                     userEmail: email,
                                     jobTitle: job.title,
@@ -445,7 +443,7 @@ function Dashboard() {
                                   "Application Submitted Successfully 🚀"
                                 );
 
-                              } catch(error) {
+                              } catch (error) {
 
                                 console.log(error);
 

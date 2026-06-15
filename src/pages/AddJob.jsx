@@ -19,7 +19,7 @@ function AddJob() {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "http://localhost:8080/api/jobs",
+        "https://jobai-backend-swrv.onrender.com/api/jobs",
         {
           title,
           company,
@@ -44,7 +44,7 @@ function AddJob() {
       setDescription("");
       setSkills("");
 
-    } catch(error) {
+    } catch (error) {
 
       console.log(error);
 

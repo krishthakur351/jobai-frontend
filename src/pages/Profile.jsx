@@ -53,9 +53,8 @@ function Profile() {
 
       const token =
         localStorage.getItem("token");
-
       const response = await axios.get(
-        `http://localhost:8080/api/resume/skills/${email}`,
+        `https://jobai-backend-swrv.onrender.com/api/resume/skills/${email}`,
         {
           headers: {
             Authorization:

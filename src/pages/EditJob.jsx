@@ -30,7 +30,7 @@ function EditJob() {
       const token = localStorage.getItem("token");
 
       const response = await axios.get(
-        `http://localhost:8080/api/jobs/${id}`,
+        `https://jobai-backend-swrv.onrender.com/api/jobs/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -47,7 +47,7 @@ function EditJob() {
       setDescription(job.description);
       setSkills(job.skills);
 
-    } catch(error) {
+    } catch (error) {
 
       console.log(error);
 
@@ -62,7 +62,7 @@ function EditJob() {
       const token = localStorage.getItem("token");
 
       await axios.put(
-        `http://localhost:8080/api/jobs/${id}`,
+        `https://jobai-backend-swrv.onrender.com/api/jobs/${id}`,
         {
           title,
           company,
@@ -82,7 +82,7 @@ function EditJob() {
 
       navigate("/dashboard");
 
-    } catch(error) {
+    } catch (error) {
 
       console.log(error);
 

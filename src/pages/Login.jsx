@@ -44,7 +44,7 @@ function Login() {
 
       navigate("/dashboard");
 
-    } catch(error) {
+    } catch (error) {
 
       console.log(error);
 

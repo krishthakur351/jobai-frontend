@@ -23,7 +23,7 @@ function ChatBot() {
         localStorage.getItem("email");
 
       const response = await axios.post(
-        "http://localhost:8080/api/ai/chat",
+        "https://jobai-backend-swrv.onrender.com/api/ai/chat",
         {
           email: email,
           question: question
