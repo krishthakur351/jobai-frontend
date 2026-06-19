@@ -89,13 +89,13 @@ function Dashboard() {
         localStorage.getItem("token");
 
       const response = await axios.get(
-        "https://jobai-backend-swrv.onrender.com/api/jobs"        {
-        headers: {
-          Authorization:
-            `Bearer ${token}`
-        }
-      }
-      );
+  "https://jobai-backend-swrv.onrender.com/api/jobs",
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+);
 
       setJobs(response.data);
 
