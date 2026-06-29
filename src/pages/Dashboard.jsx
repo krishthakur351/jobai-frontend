@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
 import "./Dashboard.css";
+import api from "../api/axios";
+
+const response = await api.get("/api/jobs");
 
 function Dashboard() {
 

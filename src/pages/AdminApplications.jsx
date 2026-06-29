@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import Navbar from "../components/Navbar";
+import api from "../api/axios";
+
+const response = await api.get("/api/applications");
 
 function AdminApplications() {
 

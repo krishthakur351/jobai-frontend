@@ -2,6 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 
 import Navbar from "../components/Navbar";
+import api from "../api/axios";
+
+const response = await api.post("/api/resume/upload", formData, {
+  headers: { "Content-Type": "multipart/form-data" }
+});
 
 function ResumeUpload() {
 

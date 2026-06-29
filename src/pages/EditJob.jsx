@@ -3,6 +3,9 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
 import Navbar from "../components/Navbar";
+import api from "../api/axios";
+
+await api.put(`/api/jobs/${id}`, { title, company, location, salary, description, skills });
 
 function EditJob() {
 

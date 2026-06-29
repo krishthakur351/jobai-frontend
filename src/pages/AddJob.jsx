@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 
 import Navbar from "../components/Navbar";
+import api from "../api/axios";
+
+await api.post("/api/jobs", { title, company, location, salary, description, skills });
 
 function AddJob() {
 

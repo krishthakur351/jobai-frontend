@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import api from "../api/axios";
+
+const response = await api.post("/api/ai/chat", { email, question });
 
 function ChatBot() {
 
